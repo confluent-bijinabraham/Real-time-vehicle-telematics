@@ -41,7 +41,7 @@ In order to successfully complete this demo you need to install a few tools befo
 
 1. Create Confluent Cloud API keys by following the steps in UI. Click on the button that is present on the right top section and click on Cloud API Key.
 <div align="center"> 
-  <img src="images/cloud1.jpeg" width =100% heigth=100%>
+  <img src="images/CloudUI.png" width =100% heigth=100%>
 </div>
 
  Now Click Add Key to generate API keys and store them as we will be using that key in this demo.
@@ -91,7 +91,7 @@ variable "confluent_cloud_api_secret" {
  # Demo
 ## Execute Python Script to Generate Mock Data
 
-Please run the Python script located in the Python script folder. Before running it, make sure to replace the below mentioned  configuration settings in the code to point to your Confluent Cloud cluster that you created.
+Please run the Python script located in the Python script folder. Before running it, make sure to replace the below mentioned configuration settings in the code to point to your Confluent Cloud cluster that you created.
     
 ```
 BOOTSTRAP_SERVERS = ''  # Replace with your Confluent Cloud bootstrap servers
@@ -100,10 +100,68 @@ SASL_PASSWORD = ''  # Replace with your Confluent Cloud API secret
 ```
 To obtain the following details, navigate to the Clients section on the Confluent Cloud UI and select Python as the script type. From there, you can copy the bootstrap server and API Key details and replace them in the code.
 
-<div align="center"> 
-  <img src="images/Client.jpeg" width =100% heigth=100%>
-</div>
+```
+# Uses the CTA Bus Tracker API (documentation available here):
+# https://www.transitchicago.com/assets/1/6/cta_Bus_Tracker_API_Developer_Guide_and_Documentation_20160929.pdf
 
+# Given a list of Route Designators ('rt' below), return Vehicle IDs
+# JSON response will be most recent status for each vehicle
+
+# Take that JSON response and send it Confluent Kafka REST Proxy
+
+import requests
+import json
+from configparser import ConfigParser
+from ruamel.yaml import YAML
+yaml = YAML()
+import time
+from confluent_kafka import Producer
+
+p = Producer({
+    'bootstrap.servers': '', # Replace with your Confluent Cloud bootstrap servers
+    'sasl.mechanism': 'PLAIN', 
+    'security.protocol': 'SASL_SSL',
+    'sasl.username': '', # Replace with your Confluent Cloud API key
+    'sasl.password': ''  # Replace with your Confluent Cloud API secret
+
+})
+
+#Topic to be used in CC 
+topic = 'cta_buses'
+
+# CTA Bus Tracker API values
+api_key = '' # Replace with your CTS Bus Tracker API key
+getvehicles_url = 'http://ctabustracker.com/bustime/api/v2/getvehicles'
+
+# Format the API request and parse the response
+vehicle_params = {'key': api_key, 'format': 'json', 'rt': 'X9,11,12,J14,15,18,19,20,21,22', 'tmres': 's'}
+
+while True:
+    r_vehicles = requests.get(getvehicles_url, params=vehicle_params)
+    # each JSON object is the latest stats for each vehicle ID (bus).
+    response_dict = r_vehicles.json()
+    vehicle_dict = response_dict['bustime-response']
+    list_of_vids = vehicle_dict['vehicle']
+
+
+    for vid in list_of_vids:
+        # each vid is a dict
+        list_of_records = []
+        kafka_record = {}
+        kafka_record['value'] = vid
+        # use the vehicle ID - vid as the key for each record
+        kafka_record['key'] = vid["vid"]
+        list_of_records.append(kafka_record)
+        send_data = {}
+        send_data['records'] = list_of_records
+        send_json = json.dumps(send_data)
+        print(send_json)
+        p.produce(topic, key=vid["vid"], value=json.dumps(vid))
+        p.poll(0)
+    p.flush(10) 
+
+    time.sleep(5)
+```
 Please run the Python script using the following syntax:
 
 ```
