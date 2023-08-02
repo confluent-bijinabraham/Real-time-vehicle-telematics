@@ -91,12 +91,12 @@ variable "confluent_cloud_api_secret" {
  # Demo
 ## Execute Python Script to Generate Mock Data
 
-Please run the Python script located in the Python script folder. Before running it, make sure to replace the below mentioned configuration settings in the code to point to your Confluent Cloud cluster that you created.
+Please run the Python script located in the Python script folder. Before running it, make sure to replace the below mentioned configuration settings in the code to point to the Confluent Cloud cluster that you created.
     
 ```
-BOOTSTRAP_SERVERS = ''  # Replace with your Confluent Cloud bootstrap servers
-SASL_USERNAME = ''  # Replace with your Confluent Cloud API key
-SASL_PASSWORD = ''  # Replace with your Confluent Cloud API secret
+bootstrap.servers = ''  # Replace with your Confluent Cloud bootstrap servers
+sasl.username': ''      # Replace with your Confluent Cloud API key
+sasl.password = ''      # Replace with your Confluent Cloud API secret
 ```
 To obtain the following details, navigate to the Clients section on the Confluent Cloud UI and select Python as the script type. From there, you can copy the bootstrap server and API Key details and replace them in the code.
 
@@ -105,9 +105,9 @@ To obtain the following details, navigate to the Clients section on the Confluen
 # https://www.transitchicago.com/assets/1/6/cta_Bus_Tracker_API_Developer_Guide_and_Documentation_20160929.pdf
 
 # Given a list of Route Designators ('rt' below), return Vehicle IDs
-# JSON response will be most recent status for each vehicle
+# JSON response will be the most recent status for each vehicle
 
-# Take that JSON response and send it Confluent Kafka REST Proxy
+# Take that JSON response and send it to Confluent Kafka REST Proxy
 
 import requests
 import json
@@ -171,9 +171,7 @@ python mock_data_generator.py
 
 ## Enrich Data Streams with ksqlDB
 
-Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
-
-<B>This section will involve the creation of a KStream and KTable that will calculate the kills to death ratio for each player in real-time using simple SQL like commands.<B>
+Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
 
 If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
 
@@ -192,19 +190,11 @@ If you’re interested in learning more about ksqlDB and the differences between
 
  ```
 
-  CREATE STREAM telemetry_stream (
-  player_id VARCHAR,
-  event_type VARCHAR,
-  timestamp BIGINT
-) WITH (
-  KAFKA_TOPIC='telemetry_events',
-  VALUE_FORMAT=‘JSON’
-);
  ```
 4. Use the following statement to query `telemetry_stream ` stream to ensure it's being populated correctly.
 
    ```
-   SELECT * FROM telemetry_stream EMIT CHANGES;
+  
    ```
 
    Stop the running query by clicking on **Stop**.
@@ -213,26 +203,17 @@ If you’re interested in learning more about ksqlDB and the differences between
   <img src="images/Stream_Data_Display.jpeg" width =100% heigth=100%>
 </div>
 
-5. Create `player_kill_ratio` table based on the `telemetry_stream` stream you just created.The table is updated in real-time every time a player kills or dies within a specific window. It is important to note that in this example, the tumbling window is set to 5 minutes, but you have the flexibility to choose your own window size.
-
- ```
-
- CREATE TABLE player_kill_ratio  with (kafka_topic = ‘player_kill_ratio’) AS
-SELECT player_id,
-       SUM(CASE WHEN event_type = 'kill' THEN 1 ELSE 0 END) as kill_count,
-       SUM(CASE WHEN event_type = 'death' THEN 1 ELSE 0 END) as death_count,
-       (SUM(CASE WHEN event_type = 'kill' THEN 1 ELSE 0 END) * 1.0) / NULLIF(SUM(CASE WHEN event_type = 'death' THEN 1 ELSE 0 END), 0) as kill_ratio
-FROM telemetry_stream
-WINDOW TUMBLING (SIZE 5 MINUTES)  -- Adjust the window size as needed
-GROUP BY player_id
-EMIT CHANGES;
+5. 
 
 ```
 
-6. Use the following statement to query `player_kill_ratio` table to ensure it's being populated correctly.
+
+```
+
+6. 
 
    ```SQL
-   SELECT * FROM player_kill_ratio;
+   
    ```
 
    Stop the running query by clicking on **Stop**.
