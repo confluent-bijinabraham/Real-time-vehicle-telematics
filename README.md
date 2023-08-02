@@ -1,12 +1,14 @@
 # Real-time vehicle telematics
 
+From locomotive analytics companies tracking predictive maintenance data from their trains, to digital-native companies tracking semi-trailer trucks movement data across America’s highways, or municipalities using 100’s of buses to move people around their city. Confluence has seen it all when it comes to collecting IoT data. IoT-centric companies are struggling to collect IoT data in order to optimize fleet management, reduce operating costs, improve safety and compliance, and enhance the customer experience.
 
+One thing remains the same – all of these companies rely on 1 too many IoT devices(commonly 1,000s to 100,000s) to collect high volumes of data to a central repository in the cloud for processing, warehousing, and delivery back to their platform applications. The hunger for consuming and delivering this real-time data has reached an all-time high. 
 
 This demo guides you through the process of utilizing telemetry events to extract user insights using confluent kafka.
 
 ## Architecture Diagram
 
-This demo makes use of a Python data generator script to transmit telemetry events from the game server to Confluent Cloud. The events are then processed through KSQLDB, where they are enriched to perform real-time calculations to determine the average kills per death for players. The enriched data can be sent to any external system of your choice for further analysis using a connector plugin.
+This demo makes use of a Python data generator script to transmit real-time IOT events from the CTA buses API to Confluent Cloud. The events are then processed through KSQLDB, where they are enriched to perform transformations on the data. The enriched data can be sent to any external system of your choice for further analysis using a connector plugin.
 
 <div align="center"> 
   <img src="images/RT metrics architecture.jpeg" width =100% heigth=100%>
@@ -16,13 +18,13 @@ This demo makes use of a Python data generator script to transmit telemetry even
 
 # Requirements
 
-In order to successfully complete this demo you need to install few tools before getting started.
+In order to successfully complete this demo you need to install a few tools before getting started.
 
 - If you don't have a Confluent Cloud account, sign up for a free trial [here](https://www.confluent.io/confluent-cloud/tryfree).
 - Install Confluent Cloud CLI by following the instructions [here](https://docs.confluent.io/confluent-cli/current/install.html).
 - Please follow the instructions to install Terraform if it is not already installed on your system.[here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)  
 - This demo uses Python 3.9.13 version.
-- This demo uses python modules. You can install this module through `pip`.
+- This demo uses Python modules. You can install this module through `pip`.
   ```
   pip3 install modulename
   ```
@@ -35,14 +37,14 @@ In order to successfully complete this demo you need to install few tools before
 1. After verifying your email address, access Confluent Cloud sign-in by navigating [here](https://confluent.cloud).
 1. When provided with the _username_ and _password_ prompts, fill in your credentials.
 
-   > **Note:** If you're logging in for the first time you will see a wizard that will walk you through the some tutorials. Minimize this as you will walk through these steps in this guide.
+   > **Note:** If you're logging in for the first time you will see a wizard that will walk you through some tutorials. Minimize this as you will walk through these steps in this guide.
 
-1. Create Confluent Cloud API keys by following the steps in UI.Click on the button that is present on the right top section and click on Cloud API Key.
+1. Create Confluent Cloud API keys by following the steps in UI. Click on the button that is present on the right top section and click on Cloud API Key.
 <div align="center"> 
   <img src="images/cloud1.jpeg" width =100% heigth=100%>
 </div>
 
- Now Click Add Key to generate API keys and store it as we will be using that key in this demo.
+ Now Click Add Key to generate API keys and store them as we will be using that key in this demo.
  <div align="center"> 
   <img src="images/cloud2.jpeg" width =100% heigth=100%>
 </div>
