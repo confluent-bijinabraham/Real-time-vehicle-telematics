@@ -9,7 +9,7 @@ This demo guides you through the process of utilizing telemetry events to extrac
 This demo makes use of a Python data generator script to transmit telemetry events from the game server to Confluent Cloud. The events are then processed through KSQLDB, where they are enriched to perform real-time calculations to determine the average kills per death for players. The enriched data can be sent to any external system of your choice for further analysis using a connector plugin.
 
 <div align="center"> 
-  <img src="images/Final_Arch.jpeg" width =100% heigth=100%>
+  <img src="images/RT metrics architecture.jpeg" width =100% heigth=100%>
 </div>
 
 
