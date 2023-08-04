@@ -60,11 +60,11 @@ In order to successfully complete this demo you need to install a few tools befo
 ```
 variable "confluent_cloud_api_key" {
   
-  default = " Replace with your API Key created during pre-requsite"   
+  default = " Replace with your API Key"   
 }
 
 variable "confluent_cloud_api_secret" {
-  default = "Replace with your API Key created during pre-requsite"   
+  default = "Replace with your API secret"   
 }
 ```
  ### Build your cloud infrastructure
