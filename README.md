@@ -168,61 +168,7 @@ Please run the Python script using the following syntax:
 python mock_data_generator.py
 ```
 
-
-## Enrich Data Streams with ksqlDB
-
-Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
-
-If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
-
-1. On the navigation menu click on **ksqlDB** and step into the cluster you created during setup.
-   To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream or table.
-
-2. **VERY IMPORTANT** -- at the bottom of the editor, set `auto.offset.reset` to `earliest`, or enter the statement:
-
-   ```SQL
-   SET 'auto.offset.reset' = 'earliest';
-   ```
-
-   If you use the default value of `latest`, then ksqlDB will read form the tail of the topics rather than the beginning, which means streams and tables won't have all the data you think they should.
-
-3. Create a ksqlDB stream from `telemetry_stream` topic.
-
- ```
-
- ```
-4. Use the following statement to query `telemetry_stream ` stream to ensure it's being populated correctly.
-
-   ```
-  
-   ```
-
-   Stop the running query by clicking on **Stop**.
-
-   <div align="center"> 
-  <img src="images/Stream_Data_Display.jpeg" width =100% heigth=100%>
-</div>
-
-5. 
-
-```
-
-
-```
-
-6. 
-
-   ```SQL
-   
-   ```
-
-   Stop the running query by clicking on **Stop**.
-<div align="center"> 
-  <img src="images/Kill:Death-Output.jpeg" width =100% heigth=100%>
-</div>
-
-
-## Connect External System  to sink Enriched Events from  Confluent Cloud using Connector
+## Connect External System to sink Enriched Events from  Confluent Cloud using Connector
 
 You can create  Sink connector either through CLI or Confluent Cloud web UI.
 
