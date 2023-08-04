@@ -59,12 +59,7 @@ resource "confluent_api_key" "terraform_Created_APIKEY" {
      id = confluent_environment.development.id
      
     }
-  }
-    
-  
-  
-
- 
+  } 
 }
    
 
