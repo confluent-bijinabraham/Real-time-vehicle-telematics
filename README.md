@@ -227,7 +227,7 @@ Confluent offers data governance tools such as Stream Quality, Stream Catalog, a
     - Where is it going?
     - Where, when, and how was it transformed?
 
-In our use case, the stream lineage appears as follows: we utilize a Python script to generate events that are sent to the telemetry topic. These events are then enriched on the stream with the assistance of a KTable, where the kill-to-death ratio is calculated.
+In our use case, the stream lineage appears as follows: we utilize a Python script to generate events that are sent to the telemetry topic. These events are sent to the monitoring tool of preference to track the vehicle in realtime with the latitude and longitude
 
 
 <div align="center"> 
