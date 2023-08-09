@@ -320,18 +320,19 @@ Go back to the terminal window where the [mock_data_generator.py](./python//mock
 Confluent offers data governance tools such as Stream Quality, Stream Catalog, and Stream Lineage in a package called Stream Governance. These features ensure your data is high quality, observable and discoverable. Learn more about **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information.
 
 1.  Navigate to https://confluent.cloud
-1.  Use the left hand-side menu and click on **Stream Lineage**.
+2.  Use the left hand-side menu and click on **Stream Lineage**.
     Stream lineage provides a graphical UI of the end to end flow of your data. Both from the a bird’s eye view and drill-down magnification for answering questions like:
 
     - Where did data come from?
     - Where is it going?
     - Where, when, and how was it transformed?
 
-In our use case, the stream lineage appears as follows: we utilize a Python script to generate events that are sent to the telemetry topic. These events are sent to the monitoring tool of preference to track the vehicle in realtime with the latitude and longitude
+In our use case, the stream lineage appears as follows: we utilize a Python script to generate events that are sent to the telemetry topic. These events are sent to the monitoring tool of preference to track the vehicle in real time with the latitude and longitude
+
 
 
 <div align="center"> 
-  <img src="images/goverance.jpeg" width =100% heigth=100%>
+  <img src="images/stream.jpeg" width =100% heigth=100%>
 </div>
    
 
