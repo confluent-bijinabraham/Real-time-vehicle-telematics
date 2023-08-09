@@ -1,6 +1,6 @@
 # Real-time vehicle telematics
 
-From locomotive analytics companies tracking predictive maintenance data from their trains, to digital-native companies tracking semi-trailer trucks movement data across America’s highways, or municipalities using 100’s of buses to move people around their city. Confluence has seen it all when it comes to collecting IoT data. IoT-centric companies are struggling to collect IoT data in order to optimize fleet management, reduce operating costs, improve safety and compliance, and enhance the customer experience.
+From locomotive analytics companies tracking predictive maintenance data from their trains, to digital-native companies tracking semi-trailer trucks movement data across America’s highways, or municipalities using 100’s of buses to move people around their city. Confluent has seen it all when it comes to collecting IoT data. IoT-centric companies are struggling to collect IoT data in order to optimize fleet management, reduce operating costs, improve safety and compliance, and enhance the customer experience.
 
 One thing remains the same – all of these companies rely on 1 too many IoT devices(commonly 1,000s to 100,000s) to collect high volumes of data to a central repository in the cloud for processing, warehousing, and delivery back to their platform applications. The hunger for consuming and delivering this real-time data has reached an all-time high. 
 
