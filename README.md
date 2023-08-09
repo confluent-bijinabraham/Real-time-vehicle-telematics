@@ -167,7 +167,107 @@ Please run the Python script using the following syntax:
 ```
 python mock_data_generator.py
 ```
+## Enrich Data Streams with ksqlDB
 
+Now that you have data flowing through Confluent, you can now easily build stream processing applications using ksqlDB. You are able to continuously transform, enrich, join, and aggregate your data using simple SQL syntax. You can gain value from your data directly from Confluent in real-time. Also, ksqlDB is a fully managed service within Confluent Cloud with a 99.9% uptime SLA. You can now focus on developing services and building your data pipeline while letting Confluent manage your resources for you.
+
+<B>This Section invloves creation of KTable which provides us the real time postion of a fleet along with other fleet details for monitoring.<B>
+
+If you’re interested in learning more about ksqlDB and the differences between streams and tables, I recommend reading these two blogs [here](https://www.confluent.io/blog/kafka-streams-tables-part-3-event-processing-fundamentals/) and [here](https://www.confluent.io/blog/how-real-time-stream-processing-works-with-ksqldb/).
+
+1. On the navigation menu click on **ksqlDB** and step into the cluster you created during setup.
+   To write streaming queries against topics, you will need to register the topics with ksqlDB as a stream or table.
+
+2. **VERY IMPORTANT** -- at the bottom of the editor, set `auto.offset.reset` to `earliest`, or enter the statement:
+
+   ```SQL
+   SET 'auto.offset.reset' = 'earliest';
+   ```
+
+   If you use the default value of `latest`, then ksqlDB will read form the tail of the topics rather than the beginning, which means streams and tables won't have all the data you think they should.
+
+3. Create a ksqlDB table from `cta_buses` topic.
+
+
+ ```SQL
+CREATE TABLE vehicle_location_table (
+    VID int primary key,
+    TMSTMP STRING,
+    LAT double,
+    LON double,
+    HDG STRING,
+    PID INT,
+    RT STRING,
+    DES STRING,
+    PDIST INT,
+    DLY BOOLEAN,
+    TATRIPID STRING,
+    ORIGTATRIPNO STRING,
+    TABLOCKID STRING,
+    ZONE STRING
+) WITH (
+    KAFKA_TOPIC='cta_buses',
+    VALUE_FORMAT='JSON',
+    KEY_FORMAT='KAFKA'
+);
+
+ ```
+ 
+ 
+4. Use the following statement to query `vehicle_location_table` table to ensure it's being populated correctly.
+
+```SQL
+   SELECT * FROM vehicle_location_table EMIT CHANGES;
+   ```
+Stop the running query by clicking on **Stop**.
+
+<div align="center"> 
+  <img src="images/table1.jpeg" width =50% heigth= 50%>
+</div>
+
+5. Create stream `cta_buses_stream` to transform the data as needed
+```SQL
+CREATE STREAM cta_buses_stream (
+    VID INT,
+    TMSTMP STRING,
+    LAT DOUBLE,
+    LON DOUBLE,
+    HDG INT,
+    PID INT,
+    RT STRING,
+    DES STRING,
+    PDIST INT,
+    DLY BOOLEAN,
+    TATRIPID STRING,
+    ORIGTATRIPNO STRING,
+    TABLOCKID STRING,
+    ZONE STRING
+) WITH (
+    KAFKA_TOPIC=‘cta_buses,
+    VALUE_FORMAT='JSON'
+);
+```
+6. Create a table from stream
+```SQL
+CREATE STREAM VEHICLE_LOCATIONS_TABLE AS
+SELECT
+    CTA_BUSES_WITH_TIMESTAMP.VID AS VID,
+    CTA_BUSES_WITH_TIMESTAMP.TIMESTAMP AS TIMESTAMP,
+    CTA_BUSES_WITH_TIMESTAMP.LAT AS LAT,
+    CTA_BUSES_WITH_TIMESTAMP.LON AS LON,
+    CTA_BUSES_WITH_TIMESTAMP.HDG AS HDG,
+    CTA_BUSES_WITH_TIMESTAMP.PID AS PID,
+    CTA_BUSES_WITH_TIMESTAMP.RT AS RT,
+    CTA_BUSES_WITH_TIMESTAMP.DES AS DES,
+    CTA_BUSES_WITH_TIMESTAMP.PDIST AS PDIST,
+    CTA_BUSES_WITH_TIMESTAMP.DLY AS DLY,
+    CTA_BUSES_WITH_TIMESTAMP.TATRIPID AS TATRIPID,
+    CTA_BUSES_WITH_TIMESTAMP.ORIGTATRIPNO AS ORIGTATRIPNO,
+    CTA_BUSES_WITH_TIMESTAMP.TABLOCKID AS TABLOCKID,
+    CTA_BUSES_WITH_TIMESTAMP.ZONE AS ZONE
+FROM CTA_BUSES_WITH_TIMESTAMP
+EMIT CHANGES;
+```
 ## Connect External System to sink Enriched Events from  Confluent Cloud using Connector
 
 You can create  Sink connector either through CLI or Confluent Cloud web UI.
@@ -198,7 +298,7 @@ You can create  Sink connector either through CLI or Confluent Cloud web UI.
 
 Once the connector is in **Running** state navigate to your database/external system and verify messages are showing up correctly.
 
-Refer to our [documentation](https://www.confluent.io/product/connectors/) for detailed instructions about the  connector that are available.
+Refer to our [documentation](https://www.confluent.io/product/connectors/) for detailed instructions about the  connector that is available.
 
 # Teardown
 
