@@ -10,7 +10,7 @@ This demo guides you through the process of utilizing telemetry events to extrac
 
 This demo makes use of a Python data generator script to transmit real-time IOT events from the CTA buses API (MQTT) to Confluent Cloud. The events are then processed through KSQLDB, where they are enriched to perform transformations on the data. The enriched data can be sent to any external system of your choice for further analysis using a connector plugin.
 
-The Bus Tracker API allows for querying data from the CTA Bus Tracker service, with an XML document as output. The system can provide estimated arrival times for buses as they approach bus stops, as well as route, service, and vehicle location data. Information about buses and their estimated arrivals is updated about once every minute.
+The Bus Tracker API allows for querying data(MQTT) from the CTA Bus Tracker service, with an XML document as output. The system can provide estimated arrival times for buses as they approach bus stops, as well as route, service, and vehicle location data. Information about buses and their estimated arrivals is updated about once every minute.
 
 <div align="center"> 
   <img src="images/RT metrics architecture.jpeg" width =100% heigth=100%>
