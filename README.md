@@ -4,7 +4,7 @@ From locomotive analytics companies tracking predictive maintenance data from th
 
 One thing remains the same – all of these companies rely on 1 too many IoT devices(commonly 1,000s to 100,000s) to collect high volumes of data to a central repository in the cloud for processing, warehousing, and delivery back to their platform applications. The hunger for consuming and delivering this real-time data has reached an all-time high. 
 
-This demo guides you through the process of utilizing telemetry events to extract user insights using confluent kafka.
+Confluent’s streaming platform can’t solve these problems alone. MQTT and Kafka are two popular technologies used for IoT data collection and processing. MQTT is a lightweight messaging protocol that is widely used for IoT data collection. It is designed to work with low-power devices and unreliable networks. Here's how you can use them together:
 
 ## Architecture Diagram
 
