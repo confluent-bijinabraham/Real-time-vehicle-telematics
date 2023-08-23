@@ -219,8 +219,8 @@ CREATE TABLE vehicle_location_table (
 4. Use the following statement to query `vehicle_location_table` table to ensure it's being populated correctly.
 
 ```SQL
-   SELECT * FROM vehicle_location_table EMIT CHANGES;
-   ```
+SELECT * FROM vehicle_location_table EMIT CHANGES;
+```
 Stop the running query by clicking on **Stop**.
 
 <div align="center"> 
@@ -251,7 +251,7 @@ CREATE STREAM cta_buses_stream (
 ```
 6. Create a table from stream
 ```SQL
-CREATE STREAM VEHICLE_LOCATIONS_TABLE AS
+CREATE STREAM VEHICLE_LOCATIONS_STREAM AS
 SELECT
     CTA_BUSES_WITH_TIMESTAMP.VID AS VID,
     CTA_BUSES_WITH_TIMESTAMP.TIMESTAMP AS TIMESTAMP,
@@ -270,7 +270,11 @@ SELECT
 FROM CTA_BUSES_WITH_TIMESTAMP
 EMIT CHANGES;
 ```
-## Connect External System to sink Enriched Events from  Confluent Cloud using Connector
+7. Use the following statement to query VEHICLE_LOCATIONS_STREAM stream to ensure it's being populated correctly.
+```SQL
+SELECT * FROM VEHICLE_LOCATIONS_STREAM  EMIT CHANGES;
+```
+## Connect External System to sink Enriched Events from Confluent Cloud using Connector
 
 You can create  Sink connector either through CLI or Confluent Cloud web UI.
 
