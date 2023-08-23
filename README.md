@@ -1,4 +1,4 @@
-# Real-time vehicle telematics
+# IoT Data Integration for Real-Time Processing with Confluent Cloud and MQTT
 
 From locomotive analytics companies tracking predictive maintenance data from their trains, to digital-native companies tracking semi-trailer trucks movement data across America’s highways, or municipalities using 100’s of buses to move people around their city. Confluent has seen it all when it comes to collecting IoT data. IoT-centric companies are struggling to collect IoT data in order to optimize fleet management, reduce operating costs, improve safety and compliance, and enhance the customer experience.
 
