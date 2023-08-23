@@ -190,7 +190,6 @@ If you’re interested in learning more about ksqlDB and the differences between
 
 3. Create a ksqlDB table from `cta_buses` topic.
 
-
  ```SQL
 CREATE TABLE vehicle_location_table (
     VID int primary key,
@@ -216,7 +215,7 @@ CREATE TABLE vehicle_location_table (
  ```
  
  
-4. Use the following statement to query `vehicle_location_table` table to ensure it's being populated correctly.
+4. Use the following statement to query the `vehicle_location_table` table to ensure it's being populated correctly.
 
 ```SQL
 SELECT * FROM vehicle_location_table EMIT CHANGES;
@@ -251,28 +250,28 @@ CREATE STREAM cta_buses_stream (
 ```
 6. Create a table from stream
 ```SQL
-CREATE STREAM VEHICLE_LOCATIONS_STREAM AS
+CREATE TABLE VEHICLE_LOCATIONS_TABLE AS
 SELECT
-    CTA_BUSES_WITH_TIMESTAMP.VID AS VID,
-    CTA_BUSES_WITH_TIMESTAMP.TIMESTAMP AS TIMESTAMP,
-    CTA_BUSES_WITH_TIMESTAMP.LAT AS LAT,
-    CTA_BUSES_WITH_TIMESTAMP.LON AS LON,
-    CTA_BUSES_WITH_TIMESTAMP.HDG AS HDG,
-    CTA_BUSES_WITH_TIMESTAMP.PID AS PID,
-    CTA_BUSES_WITH_TIMESTAMP.RT AS RT,
-    CTA_BUSES_WITH_TIMESTAMP.DES AS DES,
-    CTA_BUSES_WITH_TIMESTAMP.PDIST AS PDIST,
-    CTA_BUSES_WITH_TIMESTAMP.DLY AS DLY,
-    CTA_BUSES_WITH_TIMESTAMP.TATRIPID AS TATRIPID,
-    CTA_BUSES_WITH_TIMESTAMP.ORIGTATRIPNO AS ORIGTATRIPNO,
-    CTA_BUSES_WITH_TIMESTAMP.TABLOCKID AS TABLOCKID,
-    CTA_BUSES_WITH_TIMESTAMP.ZONE AS ZONE
-FROM CTA_BUSES_WITH_TIMESTAMP
+    VID,
+    TMSTMP,
+    LAT,
+    LON,
+    HDG,
+    PID,
+    RT,
+    DES,
+    PDIST,
+    DLY,
+    TATRIPID,
+    ORIGTATRIPNO,
+    TABLOCKID,
+    ZONE
+FROM cta_buses_stream
 EMIT CHANGES;
 ```
-7. Use the following statement to query VEHICLE_LOCATIONS_STREAM stream to ensure it's being populated correctly.
+7. Use the following statement to query VEHICLE_LOCATIONS_TABLE stream to ensure it's being populated correctly.
 ```SQL
-SELECT * FROM VEHICLE_LOCATIONS_STREAM  EMIT CHANGES;
+SELECT * FROM VEHICLE_LOCATIONS_TABLE  EMIT CHANGES;
 ```
 ## Connect External System to sink Enriched Events from Confluent Cloud using Connector
 
