@@ -273,6 +273,12 @@ EMIT CHANGES;
 ```SQL
 SELECT * FROM VEHICLE_LOCATIONS_TABLE  EMIT CHANGES;
 ```
+<div align="left"> 
+  <img src="images/querytable1.jpeg" width =100% heigth=100%>
+</div>
+<div align="right"> 
+  <img src="images/querytable2.jpeg" width =100% heigth=100%>
+</div>
 ## Connect External System to sink Enriched Events from Confluent Cloud using Connector
 
 You can create  Sink connector either through CLI or Confluent Cloud web UI.
