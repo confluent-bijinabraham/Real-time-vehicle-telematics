@@ -312,21 +312,6 @@ Once the connector is in **Running** state navigate to your database/external sy
 
 Refer to our [documentation](https://www.confluent.io/product/connectors/) for detailed instructions about the  connector that is available.
 
-# Teardown
-
-You want to delete any resources that were created during the demo so you don't incur additional charges.
-
-
-## Python Script
-
-Go back to the terminal window where the [mock_data_generator.py](./python//mock_data_generator.py) is running and quit with `Ctrl+C`.
-
-## Infrastructure
-
-1. Run the following command to delete all resources created by Terraform
-   ```bash
-   terraform apply -destory
-
 ## Confluent Cloud Stream Governance
 
 Confluent offers data governance tools such as Stream Quality, Stream Catalog, and Stream Lineage in a package called Stream Governance. These features ensure your data is high quality, observable and discoverable. Learn more about **Stream Governance** [here](https://www.confluent.io/product/stream-governance/) and refer to the [docs](https://docs.confluent.io/cloud/current/stream-governance/overview.html) page for detailed information.
@@ -347,6 +332,21 @@ In our use case, the stream lineage appears as follows: we utilize a Python scri
   <img src="images/stream.jpeg" width =100% heigth=100%>
 </div>
    
+
+# Teardown
+
+You want to delete any resources that were created during the demo so you don't incur additional charges.
+
+
+## Python Script
+
+Go back to the terminal window where the [mock_data_generator.py](./python//mock_data_generator.py) is running and quit with `Ctrl+C`.
+
+## Infrastructure
+
+1. Run the following command to delete all resources created by Terraform
+   ```bash
+   terraform apply -destory
 
 
 # References
